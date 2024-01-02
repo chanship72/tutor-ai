@@ -25,9 +25,9 @@ async function createAssistant() {
   });
 
   const assistantResponse = await openai.beta.assistants.create({
-    name: "Professional Teacher given STT", // adjust name as per requirement
-    instructions: "You are a professional Teacher based on STT.Always Behave Like Professional and friendly teacher.",
-    tools: [{ type: "code_interpreter" }], // adjust tools as per requirement
+    name: "Professional Tutor based on a given file.", // adjust name as per requirement
+    instructions: "You are a professional tutor based on a given file. Make answer in Korean.",
+    tools: [{ type: "retrieval" }], // adjust tools as per requirement
     model: "gpt-4-1106-preview", // or any other GPT-3.5 or GPT-4 model
     file_ids: [file.id]
   });
