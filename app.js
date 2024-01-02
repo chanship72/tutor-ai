@@ -20,7 +20,7 @@ let assistant_id;
 async function createAssistant() {
   // Upload the file
   const file = await openai.files.create({
-    file: fs.createReadStream("./stt_01.txt"),
+    file: fs.createReadStream("./data/stt_01.txt"),
     purpose: "assistants",
   });
 
