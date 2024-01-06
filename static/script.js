@@ -1,4 +1,5 @@
 const chatInput = document.querySelector("#chat-input");
+const assistantInput = document.querySelector("#assistant-input");
 const sendButton = document.querySelector("#send-btn");
 const chatContainer = document.querySelector(".chat-container");
 const themeButton = document.querySelector("#theme-btn");
@@ -35,11 +36,14 @@ const getChatResponse = async (incomingChatDiv) => {
     const API_URL = "http://localhost:3000/chat";
     const pElement = document.createElement("p");
 
+    const assistant_id = assistantInput.value.trim();
+
     // Define the properties and data for the API request
     const requestOptions = {
         method: "POST",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "assistant_id": assistant_id
         },
         body: JSON.stringify({
             message: userText
@@ -164,5 +168,3 @@ const updateChatHistorySidebar = () => {
     chatHistoryContent.innerHTML = chatContainer.innerHTML;
 };
 
-// Example: Call updateChatHistorySidebar when a new chat is added
-// Integrate this into your existing chat handling functions
