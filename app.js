@@ -8,7 +8,7 @@ import morgan from "morgan";
 dotenv.config();
 
 // 환경변수로 node에서 허가되지 않은 인증TLS통신을 거부하지 않겠다고 설정
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+// process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 const app = express();
 app.use(bodyParser.json());
@@ -17,36 +17,20 @@ app.use(express.static('static'));
 const apiKey = process.env.OPENAI_API_KEY;
 const openai = new OpenAI(apiKey);
 
-let assistant_id;
+let assistant_id = process.env.ASSISTANT_ID;
+console.log(`Assistant ID: ${assistant_id}`);
 
-// Create an Assistant
-async function createAssistant() {
-  // Upload the file
-  const file = await openai.files.create({
-    file: fs.createReadStream("./data/stt_01.txt"),
-    purpose: "assistants",
-  });
-
-  const assistantResponse = await openai.beta.assistants.create({
-    name: "Professional Teacher given STT", // adjust name as per requirement
-    instructions: "You are a professional Teacher based on STT.Always Behave Like Professional and friendly teacher. Do not answer the question which is not referenced in a given file.",
-    tools: [{ type: "retrieval" }], // adjust tools as per requirement
-    model: "gpt-4-1106-preview", // or any other GPT-3.5 or GPT-4 model
-    file_ids: [file.id]
-  });
-  assistant_id = assistantResponse.id;
-
-  console.log(`Assistant ID: ${assistant_id}`);
-}
-
-createAssistant();
 app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'build', 'index.html'));
+  // console.log(__dirname)
+    // res.sendFile(path.resolve(__dirname, 'build', 'index.html'));
   });
 
 // Endpoint to handle chat
 app.post("/chat", async (req, res) => {
   try {
+    assistant_id = req.header('assistant_id');
+    console.log(`Assistant ID: ${assistant_id}`);
+
     if (!req.body.message) {
       return res.status(400).json({ error: "Message field is required" });
     }
@@ -77,7 +61,7 @@ app.post("/chat", async (req, res) => {
     // Display the Assistant's Response
     const messagesResponse = await openai.beta.threads.messages.list(threadId);
     const assistantResponses = messagesResponse.data.filter(msg => msg.role === 'assistant');
-
+    // console.log(messagesResponse)
     const response = assistantResponses.map(msg => 
       msg.content
         .filter(contentItem => contentItem.type === 'text')
