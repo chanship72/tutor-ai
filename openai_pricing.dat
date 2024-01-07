@@ -1,0 +1,53 @@
+GPT-4 Turbo
+Model			Input		Output
+gpt-4-1106-preview		$0.01 / 1K tokens	$0.03 / 1K tokens
+gpt-4-1106-vision-preview	$0.01 / 1K tokens	$0.03 / 1K tokens
+
+GPT-3.5 Turbo
+GPT-3.5 Turbo models are capable and cost-effective.
+gpt-3.5-turbo-1106 is the flagship model of this family, supports a 16K context window and is optimized for dialog.
+Model			Input		Output
+gpt-3.5-turbo-1106		$0.0010 / 1K tokens	$0.0020 / 1K tokens
+gpt-3.5-turbo-instruct	$0.0015 / 1K tokens	$0.0020 / 1K tokens
+
+Assistants API
+Assistants API and tools (retrieval, code interpreter) make it easy for developers to build AI assistants within their own applications. Each assistant incurs its own retrieval file storage fee based on the files passed to that assistant. The retrieval tool chunks and indexes your files content in our vector database.
+Tool	Input
+Retrieval	$0.20 / GB / assistant / day (free until 01/12/2024)
+
+Audio models
+Model	Usage
+Whisper	$0.006 / minute (rounded to the nearest second)
+
+If you enable retrieval for a specific Assistant, all the files attached will be automatically indexed and you will be charged the $0.20/GB per assistant per day. 
+The maximum file size is 512 MB and no more than 2,000,000 tokens (computed automatically when you attach a file). 
+You can attach a maximum of 20 files per Assistant, and they can be at most 512 MB each.
+Messages also have the same file size and token limits as Assistants (512 MB file size limit and 2,000,000 token limit).
+Model: you can specify any GPT-3.5 or GPT-4 models. The Retrieval tool requires gpt-3.5-turbo-1106 and gpt-4-1106-preview models.
+
+MODEL			
+gpt-4-1106-preview
+
+DESCRIPTION
+GPT-4 Turbo(New)
+The latest GPT-4 model with improved instruction following, JSON mode, reproducible outputs, parallel function calling, and more. Returns a maximum of 4,096 output tokens. This preview model is not yet suited for production traffic. Learn more.
+
+CONTEXT WINDOW
+128,000 tokens
+
+TRAINING DATA
+Up to Apr 2023
+
+
+MODEL
+gpt-3.5-turbo-1106
+
+DESCRIPTION
+Updated GPT 3.5 Turbo(New)
+The latest GPT-3.5 Turbo model with improved instruction following, JSON mode, reproducible outputs, parallel function calling, and more. Returns a maximum of 4,096 output tokens.
+
+CONTEXT WINDOW
+16,385 tokens
+
+TRAINING DATA
+Up to Sep 2021
