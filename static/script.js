@@ -54,6 +54,7 @@ const getChatResponse = async (incomingChatDiv) => {
     try {
         const response = await (await fetch(API_URL, requestOptions)).json();
         pElement.textContent = response.response.trim(); // Assuming the response JSON has a key 'response'
+        pElement.textContent += response.annot.quote.trim();
     } catch (error) {
         pElement.classList.add("error");
         pElement.textContent = "Oops! Something went wrong while retrieving the response. Please try again.";

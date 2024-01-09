@@ -8,7 +8,7 @@ import morgan from "morgan";
 dotenv.config();
 
 // 환경변수로 node에서 허가되지 않은 인증TLS통신을 거부하지 않겠다고 설정
-// process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 const app = express();
 app.use(bodyParser.json());
@@ -60,16 +60,19 @@ app.post("/chat", async (req, res) => {
 
     // Display the Assistant's Response
     const messagesResponse = await openai.beta.threads.messages.list(threadId);
-    const assistantResponses = messagesResponse.data.filter(msg => msg.role === 'assistant');
     // console.log(messagesResponse)
+
+    const assistantResponses = messagesResponse.data.filter(msg => msg.role === 'assistant');
     const response = assistantResponses.map(msg => 
       msg.content
         .filter(contentItem => contentItem.type === 'text')
         .map(textContent => textContent.text.value)
         // .join('\n')
     ).join('\n');
+    // console.log(messagesResponse.data[0].content[0].text.annotations[0].file_citation.quote)
+    const annot = messagesResponse.data[0].content[0].text.annotations[0].file_citation;
 
-    res.json({ response });
+    res.json({ response, annot});
   } catch (error) {
     console.error("Error processing chat:", error);
     res.status(500).json({ error: "Internal server error" });
